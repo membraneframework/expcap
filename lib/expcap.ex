@@ -109,13 +109,21 @@ defmodule ExPcap do
   def read_packet(f, global_header, packet_header) do
     packet_data = f |> ExPcap.PacketData.from_file(global_header, packet_header)
 
-    payload = :pkt.decode(packet_data.data)
+    case :pkt.decode(packet_data.data) do
+      {:ok, payload} ->
+        %ExPcap.Packet{
+          packet_header: packet_header,
+          raw_packet_data: packet_data,
+          parsed_packet_data: payload
+        }
 
-    %ExPcap.Packet{
-      packet_header: packet_header,
-      raw_packet_data: packet_data,
-      parsed_packet_data: payload
-    }
+      {:error, _, _} ->
+        %ExPcap.Packet{
+          packet_header: packet_header,
+          raw_packet_data: packet_data,
+          parsed_packet_data: nil
+        }
+    end
   end
 
   @doc """
