@@ -2,16 +2,18 @@ defmodule ExPcap.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :expcap,
-     version: "0.1.1",
-     elixir: "~> 1.7",
-     name: "expcap",
-     source_url: "https://github.com/cobenian/expcap",
-     description: description(),
-     package: package(),
-     deps: deps(),
-     docs: docs(),
-     escript: escript()]
+    [
+      app: :expcap,
+      version: "0.1.1",
+      elixir: "~> 1.7",
+      name: "expcap",
+      source_url: "https://github.com/cobenian/expcap",
+      description: description(),
+      package: package(),
+      deps: deps(),
+      docs: docs(),
+      escript: escript()
+    ]
   end
 
   def escript do
@@ -37,7 +39,8 @@ defmodule ExPcap.Mixfile do
   defp deps do
     [
       {:earmark, "~> 1.0", only: :dev},
-      {:ex_doc, "~> 0.6", only: :dev }
+      {:ex_doc, "~> 0.6", only: :dev},
+      {:pkt, git: "https://github.com/msantos/pkt.git"}
     ]
   end
 
@@ -65,11 +68,15 @@ defmodule ExPcap.Mixfile do
   end
 
   defp package do
-    [# These are the default files included in the package
-    files: ["lib", "mix.exs", "README*"],
-    contributors: ["Bryan Weber"],
-    licenses: ["Apache 2.0"],
-    links: %{"GitHub" => "https://github.com/cobenian/expcap",
-    "Docs" => "http://cobenian.github.io/expcap/"}]
+    # These are the default files included in the package
+    [
+      files: ["lib", "mix.exs", "README*"],
+      contributors: ["Bryan Weber", "Jakub Hajto"],
+      licenses: ["Apache 2.0"],
+      links: %{
+        "GitHub" => "https://github.com/cobenian/expcap",
+        "Docs" => "http://cobenian.github.io/expcap/"
+      }
+    ]
   end
 end
