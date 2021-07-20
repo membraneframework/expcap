@@ -39,7 +39,7 @@ defimpl PayloadType, for: ExPcap.GlobalHeader do
   @doc """
   """
   @spec payload_parser(ExPcap.GlobalHeader.t()) :: PayloadType.t()
-  def payload_parser(_data) do
+  def payload_parser(_) do
     # todo check 'network' value
     Protocol.Ethernet
   end

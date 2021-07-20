@@ -42,8 +42,7 @@ defmodule ExPcap.MagicNumber do
   end
 
   @doc """
-  Returns a magic number that indicates that the bytes need to be reversed when
-  read and that datetimes are in milliseconds.
+  Returns a magic number that indicates wheather the bytes need to be reversed.
   """
   @spec magic_number(0xD4, 0xC3, 0xB2, 0xA1) :: ExPcap.MagicNumber.t()
   def magic_number(0xD4, 0xC3, 0xB2, 0xA1) do
@@ -54,10 +53,6 @@ defmodule ExPcap.MagicNumber do
     }
   end
 
-  @doc """
-  Returns a magic number that indicates that the bytes do not need to be
-  reversed when read and that datetimes are in milliseconds.
-  """
   @spec magic_number(0xA1, 0xB2, 0xC3, 0xD4) :: ExPcap.MagicNumber.t()
   def magic_number(0xA1, 0xB2, 0xC3, 0xD4) do
     %ExPcap.MagicNumber{
@@ -67,10 +62,6 @@ defmodule ExPcap.MagicNumber do
     }
   end
 
-  @doc """
-  Returns a magic number that indicates that the bytes do not need to be
-  reversed when read and that datetimes are in nanoseconds.
-  """
   @spec magic_number(0xA1, 0xB2, 0x3C, 0x4D) :: ExPcap.MagicNumber.t()
   def magic_number(0xA1, 0xB2, 0x3C, 0x4D) do
     %ExPcap.MagicNumber{
@@ -80,10 +71,6 @@ defmodule ExPcap.MagicNumber do
     }
   end
 
-  @doc """
-  Returns a magic number that indicates that the bytes need to be reversed when
-  read and that datetimes are in nanoseconds.
-  """
   @spec magic_number(0x4D, 0x3C, 0xB2, 0xA1) :: ExPcap.MagicNumber.t()
   def magic_number(0x4D, 0x3C, 0xB2, 0xA1) do
     %ExPcap.MagicNumber{

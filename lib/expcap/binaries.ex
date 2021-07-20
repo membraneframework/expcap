@@ -214,7 +214,7 @@ defmodule ExPcap.Binaries do
       "... redacted ..."
   """
   @spec to_raw(binary) :: String.t()
-  def to_raw(_b) do
+  def to_raw(_) do
     # to_string(b)
     "... redacted ..."
   end

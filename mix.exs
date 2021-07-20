@@ -24,14 +24,16 @@ defmodule ExPcap.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :pkt]]
   end
 
   defp deps do
     [
       {:pkt, "~> 0.5.0"},
       {:earmark, "~> 1.0", only: :dev},
-      {:ex_doc, "~> 0.24.2", only: :dev}
+      {:ex_doc, "~> 0.24.2", only: :dev},
+      {:dialyxir, "~> 1.1", only: :dev, runtime: false},
+      {:credo, "~> 1.5", only: :dev, runtime: false}
     ]
   end
 
