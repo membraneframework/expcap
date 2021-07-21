@@ -41,7 +41,7 @@ defmodule ExPcap.CLI do
     case parse do
       {[help: true], _, _} -> :help
       {[file: name], _, _} -> [file: name]
-      _ -> :help
+      _other -> :help
     end
   end
 

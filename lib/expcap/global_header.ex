@@ -30,7 +30,7 @@ defmodule ExPcap.NetworkTypes do
   def network_name(network) do
     case network do
       1 -> "1 (Ethernet)"
-      _ -> "#{network}"
+      _other -> "#{network}"
     end
   end
 end
@@ -39,7 +39,7 @@ defimpl PayloadType, for: ExPcap.GlobalHeader do
   @doc """
   """
   @spec payload_parser(ExPcap.GlobalHeader.t()) :: PayloadType.t()
-  def payload_parser(_) do
+  def payload_parser(_header) do
     # todo check 'network' value
     Protocol.Ethernet
   end

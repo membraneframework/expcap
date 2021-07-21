@@ -102,7 +102,7 @@ defmodule ExPcap do
   that contains a UDP packet that contains a DNS packet.
   """
   @spec parse_packet(nil, binary, [ExPcap.Packet.t()]) :: [ExPcap.Packet.t()]
-  def parse_packet(nil, _, acc) do
+  def parse_packet(nil, _payload, acc) do
     Enum.reverse(acc)
   end
 
@@ -131,7 +131,7 @@ defmodule ExPcap do
           parsed_packet_data: payload
         }
 
-      {:error, _, _} ->
+      {:error, _so_far, _failed_proto} ->
         %ExPcap.Packet{
           packet_header: packet_header,
           raw_packet_data: packet_data,
@@ -152,7 +152,7 @@ defmodule ExPcap do
       :eof ->
         :eof
 
-      _ ->
+      _other ->
         read_packet(f, global_header, packet_header)
     end
   end
@@ -169,7 +169,7 @@ defmodule ExPcap do
       :eof ->
         acc
 
-      _ ->
+      _other ->
         read_packets(f, global_header, [next_packet | acc])
     end
   end

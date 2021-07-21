@@ -86,8 +86,7 @@ defmodule ExPcap.PacketHeader do
       :eof ->
         data
 
-      # {:error, reason} -> data
-      _ ->
+      _other ->
         if ExPcap.GlobalHeader.reverse_bytes?(global_header) do
           data |> read_reversed
         else
