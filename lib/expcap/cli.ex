@@ -21,7 +21,7 @@ defmodule ExPcap.CLI do
   """
   @spec run(list) :: nil
   def run(argv) do
-    argv |> parse_args |> process |> IO.puts
+    argv |> parse_args |> process |> IO.puts()
   end
 
   @doc """
@@ -29,35 +29,35 @@ defmodule ExPcap.CLI do
   --help, -h                :help
   --file, -f <name>         [file: name]
   """
-  # @spec parse_args(list) :: atom | [atom String.t]
+  @spec parse_args(list) :: :help | [file: String.t()]
   def parse_args(argv) do
-    parse = argv |> OptionParser.parse(
-      switches: [help: :boolean, file: :string],
-      aliases: [h: :help, f: :file]
-    )
+    parse =
+      argv
+      |> OptionParser.parse(
+        switches: [help: :boolean, file: :string],
+        aliases: [h: :help, f: :file]
+      )
+
     case parse do
-      { [ help: true ], _, _ } -> :help
-      { [ file: name ], _, _ } -> [file: name]
-      _ -> :help
+      {[help: true], _, _} -> :help
+      {[file: name], _, _} -> [file: name]
+      _other -> :help
     end
   end
 
   @doc """
-  Prints the help message.
+  Prints the help message or the contents of the PCAP file in a somewhat human readable form.
   """
-  @spec process(:help) :: String.t
+  @spec process(:help) :: String.t()
   def process(:help) do
     """
-      --file, -f <file>       The PCAP file to use
-      --help, -h              Print this message
+    --file, -f <file>       The PCAP file to use
+    --help, -h              Print this message
     """
   end
 
-  @doc """
-  Prints the contents of the PCAP file in a somewhat human readable form.
-  """
-  @spec process([:file | String.t]) :: String.t
-  def process([file: file]) do
-    file |> ExPcap.from_file |> String.Chars.to_string
+  @spec process([:file | String.t()]) :: String.t()
+  def process(file: file) do
+    file |> ExPcap.from_file() |> String.Chars.to_string()
   end
 end

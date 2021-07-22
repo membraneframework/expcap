@@ -1,3 +1,21 @@
+# Copyright 2021 Software Mansion
+#
+# Copyright 2021 Bryan Weber
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# This file was modified by Software Mansion to use :pkt library instead of implementing support for protocols on our own 
+
 defprotocol PayloadType do
   @moduledoc """
   This protocol indicates a module that is aware of which parser should be used
@@ -44,11 +62,7 @@ defimpl String.Chars, for: ExPcap do
     Packets
     -------
 
-    #{
-      item.packets
-      |> Enum.map(&String.Chars.to_string/1)
-      |> Enum.join("\n\n")
-    }
+    #{item.packets |> Enum.map(&String.Chars.to_string/1) |> Enum.join("\n\n")}
 
     """
   end
@@ -117,7 +131,7 @@ defmodule ExPcap do
           parsed_packet_data: payload
         }
 
-      {:error, _, _} ->
+      {:error, _so_far, _failed_proto} ->
         %ExPcap.Packet{
           packet_header: packet_header,
           raw_packet_data: packet_data,
@@ -138,7 +152,7 @@ defmodule ExPcap do
       :eof ->
         :eof
 
-      _ ->
+      _other ->
         read_packet(f, global_header, packet_header)
     end
   end
@@ -155,7 +169,7 @@ defmodule ExPcap do
       :eof ->
         acc
 
-      _ ->
+      _other ->
         read_packets(f, global_header, [next_packet | acc])
     end
   end
